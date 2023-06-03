@@ -1,2 +1,5 @@
 /config/db.php
 /config/globals.php
+.DS_Store
+error_log
+.htaccess

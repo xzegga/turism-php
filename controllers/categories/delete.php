@@ -3,9 +3,9 @@
     include_once($_SERVER['DOCUMENT_ROOT'].'/config/db.php');
 
     if(isset($_POST["delete"])) {
-        $id = $_POST["site-id-to-delete"];
+        $id = $_POST["cat-id-to-delete"];
 
-        $rm_sql = "SELECT * FROM posts WHERE id = {$id}";
+        $rm_sql = "SELECT * FROM categories WHERE id = $id";
         $rm_query = mysqli_query($connection, $rm_sql);
         $rowCount = mysqli_num_rows($rm_query);
 
@@ -15,14 +15,12 @@
         }
 
         if($rowCount == 0) {
-            $err_msg = '¡El Sitio Seleccionado no existe!';
-            header("Location: ./index.php?success=". urlencode($err_msg));
+            $err_msg = '¡La categoría seleccionada no existe!';
+            header("Location: ./index.php?error=". urlencode($err_msg));
             exit();
         } else {}
-            // Store the data in db, if all the preg_match condition met
-
             // Query
-            $sql = "DELETE FROM posts WHERE id={$id}";
+            $sql = "DELETE FROM categories WHERE id={$id}";
             // Create mysql query
             $sqlQuery = mysqli_query($connection, $sql);
 

@@ -19,7 +19,7 @@
             while($rowData = mysqli_fetch_array($sqlQuery)){
                 $is_active = $rowData['is_active'];
                   if($is_active == 0) {
-                     $update = mysqli_query($connection, "UPDATE users SET is_active = '1' WHERE token = '$token' ");
+                     $update = mysqli_query($connection, "UPDATE users SET is_active = 1 WHERE token = '$token' ");
                        if($update){
                            $email_verified = '<div class="alert alert-success">
                                     ¡Se verificó exitosamente el correo electrónico del usuario!

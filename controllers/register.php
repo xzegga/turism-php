@@ -86,7 +86,7 @@
                     // Query
                     $sql = "INSERT INTO users (firstname, lastname, email, mobilenumber, password, token, is_active,
                     date_time, role) VALUES ('{$firstname}', '{$lastname}', '{$email}', '{$mobilenumber}', '{$password_hash}', 
-                    '{$token}', '0', now(), '{$role}')";
+                    '{$token}', 0, now(), '{$role}')";
 
                     // Create mysql query
                     $sqlQuery = mysqli_query($connection, $sql);

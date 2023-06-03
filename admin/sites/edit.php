@@ -9,12 +9,13 @@ if ($post_query && mysqli_num_rows($post_query) > 0) {
     // Post found, retrieve the data
     $post = mysqli_fetch_assoc($post_query);
     $categoryId = $post['id'];
+    $backgroud = $post['background'];
     // Output the post details
     ?>
     <div class="container mt-5 pt-5 h-full-wf">
         <div class="container mb-5">
             <h2 class="mb-4">Editar Sitio</h2>
-            <form action="" method="post">
+            <form action="" method="post" enctype="multipart/form-data">
                 <div class="form-group mb-3">
                     <label for="title">Título:</label>
                     <input type="text" name="title" class="form-control" required
@@ -29,9 +30,9 @@ if ($post_query && mysqli_num_rows($post_query) > 0) {
                      </textarea>
                     <?php echo $contentEmptyErr; ?>
                 </div>
-                <div class="d-flex  gap-3">
+                <div class="d-flex  gap-3">                    
                     <div class="form-group mb-3 flex-fill">
-                        <label for="category-select">Categoría:</label>
+                        <label for="category-select mr-2">Categoría:</label>
                         <select class="form-control" id="category" name="category">
                             <option value="">Selecciona</option>
                             <?php while ($row = mysqli_fetch_assoc($cat_query)): ?>
@@ -41,7 +42,7 @@ if ($post_query && mysqli_num_rows($post_query) > 0) {
                         <?php echo $categoryEmptyErr; ?>
                     </div>
                     <div class="form-group mb-3 flex-fill">
-                        <label for="category-select">Estado:</label>
+                        <label for="category-select ml-2">Estado:</label>
                         <select class="form-control" name="status" id="status">
                             <option value="1" <?php if ($post['status'] == 1) echo 'selected';?>>Activo</option>
                             <option value="0" <?php if ($post['status'] == 0) echo 'selected';?>>Inactivo</option>
@@ -49,9 +50,13 @@ if ($post_query && mysqli_num_rows($post_query) > 0) {
                         <?php echo $statusEmptyErr; ?>
                     </div>
                 </div>
-
+                <div class=""><img class="img-thumbnail mb-3" src="<?php echo '/uploads/'.$backgroud; ?>" alt="" /></div>
+                <div class="custom-file mb-5">
+                    <input type="file" class="custom-file-input" name="file" id="file">
+                    <label class="custom-file-label" for="customFile">Selecciona un archivo</label>
+                </div>
                 <button type="submit" name="submit" id="submit"
-                    class="btn btn-outline-primary btn-lg btn-block">Guardar</button>
+                    class="btn btn-outline-primary btn-lg">Guardar</button>
             </form>
         </div>
     </div>
@@ -64,6 +69,8 @@ if ($post_query && mysqli_num_rows($post_query) > 0) {
 
 <script src="https://cdn.tiny.cloud/1/j6u0iqyksp4920vxhw3bye8qjd2jdxec2gn4espnoflxjo0u/tinymce/6/tinymce.min.js"
     referrerpolicy="origin"></script>
+
+<?php include('../../includes/footer.php'); ?>
 <script>
     tinymce.init({
         selector: 'textarea',
@@ -76,5 +83,9 @@ if ($post_query && mysqli_num_rows($post_query) > 0) {
             { value: 'Email', title: 'Email' },
         ]
     });
+
+    jQuery(".custom-file-input").on("change", function () {
+        var fileName = $(this).val().split("\\").pop();
+        jQuery(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
 </script>
-<?php include('../../includes/footer.php'); ?>

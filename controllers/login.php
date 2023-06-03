@@ -58,13 +58,13 @@
                         $_SESSION['lastname'] = $lastname;
                         $_SESSION['email'] = $email;
                         $_SESSION['mobilenumber'] = $mobilenumber;
-                        $_SESSION['token'] = $token;
                         $_SESSION['role'] = $role;
+                        $_SESSION['is_active'] = $is_active;
 
                         if($role == 'guess') {
                             header("Location: ./index.php");
                         } else {
-                            header("Location: ./admin/sites/list.php");    
+                            header("Location: ./admin/sites/index.php");    
                         }
                     } else {
                         $emailPwdErr = '<div class="alert alert-danger">

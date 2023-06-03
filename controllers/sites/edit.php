@@ -25,7 +25,7 @@
     } else {
         // No ID provided in the URL parameter
         $error_msg_post = '<div class="alert alert-success">¡Error, debe proveer un id!</div>';
-        header("Location: ./list.php?error=". urlencode($error_msg_post));
+        header("Location: ./index.php?error=". urlencode($error_msg_post));
         exit();
     }
 
@@ -34,14 +34,22 @@
 
     // Set empty form vars for validation mapping
     $_id = $_title = $_content = $_category = $_status = "";
-    
+
     if(isset($_POST["submit"])) {
-        $id      = $_POST["id"];
+
+        $targetDir = $_SERVER['DOCUMENT_ROOT'] . "/uploads/";
+        $fileName = !empty($_FILES["file"]["name"]) ? basename($_FILES["file"]["name"]) : "";
+        $targetFilePath = $targetDir . $fileName;
+        $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
+
+        $id         = $_POST["id"];
         $title      = $_POST["title"];
         $content    = $_POST["content"];
         $category   = $_POST["category"];
         $status     = $_POST["status"];
-        echo 'This is the estatus'.$status;
+        
+        $allowTypes = array('jpg', 'png', 'jpeg', 'gif', 'pdf');
+        
         // PHP validation
         // Verify if form values are not empty
         if(!empty($title) && !empty($content) && !empty($category) && ($status != 0 || $status != 1)){
@@ -54,12 +62,16 @@
             $status = mysqli_real_escape_string($connection, $status);
 
             // Store the data in db, if all the preg_match condition met
-
+            if (!empty($_FILES["file"]["name"]) && in_array($fileType, $allowTypes)) {
+                // Upload file to server
+                move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath);
+            }
             // Query
             $sql = "UPDATE posts SET 
                 title = '{$title}',
                 content = '{$content}',
                 category = {$category},
+                " . ($fileName != '' ? "background = '{$fileName}'," : "") . "
                 status = {$status}
             WHERE id = $postId";
             // Create mysql query
@@ -72,11 +84,11 @@
             // Send verification email
             if($sqlQuery) {
                 $success_msg = '¡Registro modificado con exito!';
-                header("Location: ./list.php?success=". urlencode($success_msg));
+                header("Location: ./index.php?success=". urlencode($success_msg));
                 exit();
             } else {
                 $error_msg = 'Error al modificar!';
-                header("Location: ./list.php?error=". urlencode($error_msg));
+                header("Location: ./index.php?error=". urlencode($error_msg));
                 exit();
             }
         } else {
