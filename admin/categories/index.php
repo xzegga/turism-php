@@ -26,6 +26,7 @@
                 echo "<tr>";
                 echo "<td>" . $row['id'] . "</td>";
                 echo "<td>" . $row['name'] . "</td>";
+                echo "<td>" . $row['description'] . "</td>";
                 echo "<td class='d-flex justify-content-end gap-2'>
                             <a href='./edit.php?id=" . $row['id'] . "' class='btn btn-primary btn-sm mr-2'>Edit</a>
                             <button data-id='" . $row['id'] . "' type='button' class='btn btn-danger btn-sm ml-2 delete-button'  data-toggle='modal' data-target='#exampleModal'>Delete</button>

@@ -1,3 +1,10 @@
+<?php
+include_once($_SERVER['DOCUMENT_ROOT'] . '/config/globals.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/config/db.php');
+if (isset($_SESSION['email']) && $_SESSION['role'] == 'admin') {
+    header("location: {$site_url}/admin/sites/");
+}
+?>
 <?php include('./controllers/login.php'); ?>
 <!doctype html>
 <html lang="en">
@@ -35,11 +42,11 @@
 
                     <div class="form-group">
                         <label>Contraseña</label>
-                        <input type="password" class="form-control" name="password_signin"
-                            id="password_signin" />
+                        <input type="password" class="form-control" name="password_signin" id="password_signin" />
                     </div>
 
-                    <button type="submit" name="login" id="sign_in" class="btn btn-outline-primary btn-lg btn-block">Ingresar</button>
+                    <button type="submit" name="login" id="sign_in"
+                        class="btn btn-outline-primary btn-lg btn-block">Ingresar</button>
                 </form>
             </div>
         </div>

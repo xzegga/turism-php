@@ -30,7 +30,7 @@
     }
 
     // Error & success messages
-    global $titleEmptyErr, $contentEmptyErr, $categoryEmptyErr, $statusEmptyErr;
+    global $titleEmptyErr, $contentEmptyErr, $categoryEmptyErr, $statusEmptyErr, $excerptEmptyErr;;
 
     // Set empty form vars for validation mapping
     $_id = $_title = $_content = $_category = $_status = "";
@@ -47,6 +47,7 @@
         $content    = $_POST["content"];
         $category   = $_POST["category"];
         $status     = $_POST["status"];
+        $excerpt = $_POST["excerpt"];
         
         $allowTypes = array('jpg', 'png', 'jpeg', 'gif', 'pdf');
         
@@ -60,6 +61,7 @@
             $content = mysqli_real_escape_string($connection, $content);
             $category = mysqli_real_escape_string($connection, $category);
             $status = mysqli_real_escape_string($connection, $status);
+            $excerpt = mysqli_real_escape_string($connection, $excerpt);
 
             // Store the data in db, if all the preg_match condition met
             if (!empty($_FILES["file"]["name"]) && in_array($fileType, $allowTypes)) {
@@ -72,7 +74,8 @@
                 content = '{$content}',
                 category = {$category},
                 " . ($fileName != '' ? "background = '{$fileName}'," : "") . "
-                status = {$status}
+                status = {$status},
+                excerpt = '{$excerpt}'
             WHERE id = $postId";
             // Create mysql query
             $sqlQuery = mysqli_query($connection, $sql);

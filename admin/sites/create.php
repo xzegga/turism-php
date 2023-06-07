@@ -16,6 +16,13 @@
 
                 <?php echo $titleEmptyErr; ?>
             </div>
+            
+            <div class="form-group mb-3">
+                <label for="excerpt">Descripcion corta (100 caracteres):</label>
+                <input type="text" name="excerpt" class="form-control" required maxlength="100"
+                    value=" <?php if (isset($_POST["excerpt"])) echo $_POST["excerpt"]; ?>">
+                <?php echo $excerptEmptyErr; ?>
+            </div>
             <div class="form-group mb-3">
                 <label for="content">Contenido:</label>
                 <textarea name="content" id="content" class="form-control" rows="5" required>

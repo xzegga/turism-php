@@ -6,15 +6,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./css/style.css">
-    <title>PHP User Registration System Example</title>
+    <link rel="stylesheet" href="./assets/css/styles.css">
+    <title>PHP User Registration & Login System Demo</title>
     <!-- jQuery + Bootstrap JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </head>
 
 <body>
-    
+    <!-- Login form -->
     <div class="App">
         <div class="vertical-center">
             <div class="inner-block">
@@ -69,7 +69,7 @@
                     <button type="submit" name="submit" id="submit" class="btn btn-outline-primary btn-lg btn-block">Regístrate
                     </button>
                 </form>
-            </div>
+                </div>
         </div>
     </div>
 

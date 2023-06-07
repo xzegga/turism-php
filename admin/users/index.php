@@ -57,7 +57,7 @@
                 </div>
                 <div class="modal-footer">
                     <form action="" method="post">
-                        <input type="text" name="cat-id-to-delete" class="cat-id-to-delete" value="" hidden>
+                        <input type="text" name="usr-id-to-delete" class="usr-id-to-delete" value="" hidden>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="submit" name="delete" class="btn btn-danger confirm-delete">Eliminar
                             usuario</button>
@@ -99,7 +99,7 @@
         btns.forEach(btn => {
             btn.addEventListener("click", (e) => {
                 const id = e.target.dataset.id;
-                const idToDelete = document.querySelector(".cat-id-to-delete");
+                const idToDelete = document.querySelector(".usr-id-to-delete");
                 idToDelete.setAttribute("value", id);
             });
         });

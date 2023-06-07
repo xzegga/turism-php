@@ -12,10 +12,10 @@ if (!$cat_query) {
 
 
 // Error & success messages
-global $titleEmptyErr, $contentEmptyErr, $categoryEmptyErr, $statusEmptyErr;
+global $titleEmptyErr, $contentEmptyErr, $categoryEmptyErr, $statusEmptyErr, $excerptEmptyErr;
 
 // Set empty form vars for validation mapping
-$_first_name = $_last_name = $_email = $_mobile_number = $_password = "";
+$_first_name = $_last_name = $_email = $_mobile_number = $_password = $_excerpt = "";
 
 
 if (isset($_POST["submit"])) {
@@ -31,6 +31,8 @@ if (isset($_POST["submit"])) {
     $category = $_POST["category"];
     $author = $_POST["author"];
     $status = $_POST["status"];
+    $excerpt = $_POST["excerpt"];
+
     $allowTypes = array('jpg', 'png', 'jpeg', 'gif', 'pdf');
     // PHP validation
     // Verify if form values are not empty
@@ -43,6 +45,7 @@ if (isset($_POST["submit"])) {
         $category = mysqli_real_escape_string($connection, $category);
         $author = mysqli_real_escape_string($connection, $author);
         $status = mysqli_real_escape_string($connection, $status);
+        $excerpt = mysqli_real_escape_string($connection, $excerpt);
 
         // Store the data in db, if all the preg_match condition met
         if (!empty($_FILES["file"]["name"]) && in_array($fileType, $allowTypes)) {
@@ -50,7 +53,7 @@ if (isset($_POST["submit"])) {
             move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath);
         }
         // Query
-        $sql = "INSERT INTO posts (title, content, author, background, category, status) VALUES ('{$title}', '{$content}', {$author}, '{$fileName}', {$category}, {$status})";
+        $sql = "INSERT INTO posts (title, content, author, background, category, status, excerpt) VALUES ('{$title}', '{$content}', {$author}, '{$fileName}', {$category}, {$status}, '{$excerpt}')";
 
         // Create mysql query
         $sqlQuery = mysqli_query($connection, $sql);
@@ -88,6 +91,12 @@ if (isset($_POST["submit"])) {
         if (empty($status)) {
             $statusEmptyErr = '<div class="alert alert-danger mt-1">
                     Debe selecionar un estado.
+                </div>';
+        }
+
+        if (empty($excerpt)) {
+            $excerptEmptyErr = '<div class="alert alert-danger mt-1">
+                    La descripción corta no puede estar en blanco.
                 </div>';
         }
 

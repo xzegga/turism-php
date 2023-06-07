@@ -108,7 +108,6 @@
         let error = urlParams.get('error');
         let success = urlParams.get('success');
         if (error) {
-            console.log('success');
             // Show error toast
             jQuery('.toast.bg-danger').toast('show');
         } else if (success) {

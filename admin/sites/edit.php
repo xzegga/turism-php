@@ -24,6 +24,12 @@ if ($post_query && mysqli_num_rows($post_query) > 0) {
                     <?php echo $titleEmptyErr; ?>
                 </div>
                 <div class="form-group mb-3">
+                    <label for="excerpt">Descripcion corta (100 caracteres):</label>
+                    <input type="text" name="excerpt" class="form-control" required  maxlength="100"
+                        value="<?php echo $post['excerpt']; ?>">
+                    <?php echo $excerptEmptyErr; ?>
+                </div>
+                <div class="form-group mb-3">
                     <label for="content">Contenido:</label>
                     <textarea name="content" id="content" class="form-control" rows="5" required>
                         <?php echo $post['content']; ?>

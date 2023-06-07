@@ -1,3 +1,6 @@
+<?php include_once($_SERVER['DOCUMENT_ROOT'] . '/config/db.php'); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT'] . '/controllers/index.php'); ?>
+
 <?php include('./includes/head.php'); ?>
 
 <body>
@@ -6,19 +9,19 @@
 
   <!-- Header - set the background image for the header in the line below-->
   <header class="bg-dark py-5 hero-background hero-home-page">
-    <div class="container px-5">
+    <div class="container px-3 pt-5">
       <div class="row gx-5 align-items-center justify-content-center">
         <div class="col-lg-8 col-xl-7 col-xxl-6">
-          <div class="my-5 text-center text-xl-start">
+          <div class="my-5 text-center text-xl-left text-lg-left">
             <span class="lead fw-normal text-white mb-4">Descubre las maravillas de</span>
             <h1 class="display-2 fw-bolder text-white mb-2">El Salvador <img
-                   src="./images/flag-heart.png" alt="" class="flah-sv"></h1>
+                   src="/assets/images/flag-heart.png" alt="" class="flah-sv"></h1>
             <p class="lead fw-normal text-white mb-4">
               Navega y descubre el Pulgarcito de América accediendo a sus
               bellos paisajes, playas, lugares historicos y mucho más
             </p>
             <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
-              <a class="btn btn-primary btn-lg px-4 me-sm-3" href="#features">Explora El
+              <a class="btn btn-primary btn-lg px-4 me-sm-3" href="/explore.php">Explora El
                 Salvador</a>
 
             </div>
@@ -57,7 +60,7 @@
             Descubre la belleza de El Salvador, aquí encontrarás diversas categorías para explorar
             los mejores destinos turísticos del país.
           </p>
-          <a class="text-decoration-none" href="#!">
+          <a class="text-decoration-none" href="/explore.php">
             Ver más información
             <i class="bi bi-arrow-right"></i>
           </a>
@@ -79,35 +82,29 @@
       </div>
     </div>
   </section>
-  <div class="container px-4 px-lg-5">
-    <!-- Content Row-->
+  <div class="album py-5 bg-light">
+      <div class="container">
+          <h2 class="mb-4">Explora lo más nuevo en TurismoSv</h2>
+          <div class="row">
+          <?php
+          while ($row = mysqli_fetch_array($query)) {
+            echo '<div class="col-md-4 pr-2 pl-2"><div class="card mb-4 shadow-sm">';
+            echo '<div class="card-body p-1"><div class="site-image" style="background-image: url(/uploads/' . $row['background'] . '); background-size: cover">';
+            echo '</div><div class="card-text mb-2 p-2">';
+            echo '<h4 class="card-title">' . $row['title'] . '</h4>';
+            echo '<p class="card-text">' . $row['excerpt'] . '...</p>';
+            echo '<div class="chip">' . $row['category'] . '</i></div>';
+            echo '</div>';
+            echo '<div class="d-flex justify-content-end align-items-center">';
+            echo '<div class="btn-group">';
+            echo '<a type="button" class="btn btn-sm btn-outline-secondary mb-2 mr-2 ml-auto" href="site.php?id=' . $row['id'] . '">Explora...</a>';
+            echo '</div></div></div></div></div>';
+        }
 
-    <!-- Call to Action-->
-    <div class="card text-white bg-secondary my-5 py-4 text-center">
-      <div class="card-body">
-        <p class="text-white m-0">
-          This call to action card is a great place to showcase some important
-          information or display a clever tagline!
-        </p>
+          mysqli_free_result($query);
+          ?>
+          </div>
       </div>
-    </div>
-    <!-- Heading Row-->
-    <div class="row gx-4 gx-lg-5 align-items-center my-5">
-      <div class="col-lg-7">
-        <img class="img-fluid rounded mb-4 mb-lg-0"
-             src="https://dummyimage.com/900x400/dee2e6/6c757d.jpg" alt="..." />
-      </div>
-      <div class="col-lg-5">
-        <h1 class="font-weight-light">Business Name or Tagline</h1>
-        <p>
-          This is a template that is great for small businesses. It doesn't
-          have too much fancy flare to it, but it makes a great use of the
-          standard Bootstrap core components. Feel free to use this template
-          for any project you want!
-        </p>
-        <a class="btn btn-primary" href="#!">Call to Action!</a>
-      </div>
-    </div>
   </div>
 
   <?php include('./includes/footer.php'); ?>

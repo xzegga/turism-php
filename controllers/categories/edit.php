@@ -22,7 +22,7 @@
     }
 
     // Error & success messages
-    global $nameEmptyErr;
+    global $nameEmptyErr, $descriptionEmptyErr;
 
     // Set empty form vars for validation mapping
     $_id = $_name = $_content = $_category = $_status = "";
@@ -30,13 +30,30 @@
     if(isset($_POST["submit"])) {
         $id        = $_POST["id"];
         $name      = $_POST["name"];
+        $description    = $_POST["description"];
+
+        $targetDir = $_SERVER['DOCUMENT_ROOT'] . "/uploads/";
+        $fileName = !empty($_FILES["file"]["name"]) ? basename($_FILES["file"]["name"]) : "";
+        $targetFilePath = $targetDir . $fileName;
+        $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
+        $allowTypes = array('jpg', 'png', 'jpeg', 'gif', 'pdf');
         // PHP validation
         // Verify if form values are not empty
         if(!empty($name)){
             $name = mysqli_real_escape_string($connection, $name);
+            $description = mysqli_real_escape_string($connection, $description);
+
+            // Store the data in db, if all the preg_match condition met
+            if (!empty($_FILES["file"]["name"]) && in_array($fileType, $allowTypes)) {
+                // Upload file to server
+                move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath);
+            }
 
             // Query
-            $sql = "UPDATE categories SET name = '{$name}' WHERE id = $id";
+            $sql = "UPDATE categories SET name = '{$name}', 
+                    description= '{$description}' 
+                    " . ($fileName != '' ? ", image = '{$fileName}'" : "") . " 
+                    WHERE id = $id";
             // Create mysql query
             $sqlQuery = mysqli_query($connection, $sql);
 
@@ -56,7 +73,12 @@
             }
         } else {
             if(empty($name)){
-                $titleEmptyErr = '<div class="alert alert-danger mt-1">
+                $nameEmptyErr = '<div class="alert alert-danger mt-1">
+                    El título no puede estar en blanco.
+                </div>';
+            }
+            if(empty($description)){
+                $descriptionEmptyErr = '<div class="alert alert-danger mt-1">
                     El título no puede estar en blanco.
                 </div>';
             }
